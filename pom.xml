@@ -84,15 +84,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- REDISSON HATAO - YEH COMMENT KARO YA DELETE -->
-        <!--
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>${redisson.version}</version>
-        </dependency>
-        -->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

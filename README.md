@@ -31,4 +31,4 @@ Backend services for SecureVault, a developer secrets manager that lets users se
 
 ## Related Repositories
 
-**Frontend:** [SecureVault-frontend]([https://github.com/YOUR-USERNAME/secure-vault-frontend](https://github.com/Priyank-013/SecureVault-Frontend))
+**Frontend:** [SecureVault-frontend](https://github.com/Priyank-013/SecureVault-Frontend)

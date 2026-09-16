@@ -53,7 +53,7 @@ public class LoginAttemptService {
         }
 
         if (attempts != null && attempts >= MAX_ATTEMPTS) {
-            System.out.println("🔒 LOCKING ACCOUNT: " + email);
+            System.out.println(" LOCKING ACCOUNT: " + email);
             redisTemplate.opsForValue().set(lockKey(email), "locked", LOCK_MINUTES, TimeUnit.MINUTES);
             redisTemplate.delete(key);
         }

@@ -25,7 +25,7 @@ public class LoginAttemptService {
 
     public boolean isLocked(String email) {
         Boolean hasKey = redisTemplate.hasKey(lockKey(email));
-        System.out.println("🔍 isLocked check for " + email + ": " + (hasKey != null && hasKey));
+        System.out.println(" isLocked check for " + email + ": " + (hasKey != null && hasKey));
         return Boolean.TRUE.equals(hasKey);
     }
 
@@ -33,7 +33,7 @@ public class LoginAttemptService {
         String key = attemptsKey(email);
         String value = redisTemplate.opsForValue().get(key);
         int attempts = value == null ? 0 : Integer.parseInt(value);
-        System.out.println("🔍 Attempts for " + email + ": " + attempts);
+        System.out.println(" Attempts for " + email + ": " + attempts);
         return attempts;
     }
 
@@ -46,7 +46,7 @@ public class LoginAttemptService {
     public long recordFailedAttempt(String email) {
         String key = attemptsKey(email);
         Long attempts = redisTemplate.opsForValue().increment(key);
-        System.out.println("📝 Recording failed attempt for " + email + ": " + attempts);
+        System.out.println(" Recording failed attempt for " + email + ": " + attempts);
 
         if (attempts != null && attempts == 1L) {
             redisTemplate.expire(key, LOCK_MINUTES, TimeUnit.MINUTES);
@@ -62,7 +62,7 @@ public class LoginAttemptService {
     }
 
     public void resetAttempts(String email) {
-        System.out.println("🔄 Resetting attempts for: " + email);
+        System.out.println(" Resetting attempts for: " + email);
         redisTemplate.delete(attemptsKey(email));
         redisTemplate.delete(lockKey(email));
     }

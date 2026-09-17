@@ -90,10 +90,10 @@ public class SecretService {
         if (!secret.getOwner().getId().equals(user.getId())) {
             throw new RuntimeException("Unauthorized");
         }
-        // pehle logs delete karo
+
         List<AccessLog> logs = accessLogRepository.findBySecret(secret);
         accessLogRepository.deleteAll(logs);
-        // phir secret delete karo
+
         secretRepository.delete(secret);
     }
 }

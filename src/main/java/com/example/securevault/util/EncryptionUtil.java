@@ -12,12 +12,16 @@ import java.util.Base64;
 @Component
 public class EncryptionUtil {
 
-    @Value("${encryption.secret:MySuperSecretKey12345678901234!!}")
+    @Value("${encryption.secret}")
     private String secretKey;
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
     private static final int GCM_IV_LENGTH = 12;
     private static final int GCM_TAG_LENGTH = 128;
+
+    // AES - algorithm that converts plain text to cipher (works on exactly 16 bytes at a time, no less no more)
+// GCM - tells AES how to properly handle data of any size (chains multiple 16-byte blocks together) + BONUS: also detects tampering (adds a "tag" to prove data wasn't changed)
+// NoPadding - some AES modes require data to be exact multiples of 16 bytes (16,32...etc), padding fills the rest with empty bytes — GCM doesn't need this, so we skip padding
 
     public String encrypt(String plainText) throws Exception {
         byte[] iv = new byte[GCM_IV_LENGTH];

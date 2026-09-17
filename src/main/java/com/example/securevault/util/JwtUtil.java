@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret:securevault-secret-key-must-be-32-bytes!}")
+    @Value("${jwt.secret}")
     private String secretString;
 
     private SecretKey key;

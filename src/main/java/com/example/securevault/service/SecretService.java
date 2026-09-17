@@ -93,7 +93,6 @@ public class SecretService {
 
         List<AccessLog> logs = accessLogRepository.findBySecret(secret);
         accessLogRepository.deleteAll(logs);
-
         secretRepository.delete(secret);
     }
 }

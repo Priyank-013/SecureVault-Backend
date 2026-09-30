@@ -29,7 +29,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        System.out.println("🚦 RateLimitFilter checking path: " + path);
+        System.out.println(" RateLimitFilter checking path: " + path);
 
         if (path.equals("/auth/login") || path.equals("/auth/register")) {
             filterChain.doFilter(request, response);

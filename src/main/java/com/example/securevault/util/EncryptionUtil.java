@@ -19,10 +19,17 @@ public class EncryptionUtil {
     private static final int GCM_IV_LENGTH = 12;
     private static final int GCM_TAG_LENGTH = 128;
 
-    // AES - algorithm that converts plain text to cipher (works on exactly 16 bytes at a time, no less no more)
-// GCM - tells AES how to properly handle data of any size (chains multiple 16-byte blocks together) + BONUS: also detects tampering (adds a "tag" to prove data wasn't changed)
-// NoPadding - some AES modes require data to be exact multiples of 16 bytes (16,32...etc), padding fills the rest with empty bytes — GCM doesn't need this, so we skip padding
 
+/*
+ENCRYPTION
+1. User enters a secret/password.
+2. Generate a random IV.
+3. Get the secret AES key.
+4. Use AES/GCM/NoPadding with the key + IV.
+5. AES-GCM encrypts the secret and creates a **tag**.
+6. Combine IV + encrypted data + tag.
+7. Convert it to Base64.
+ */
     public String encrypt(String plainText) throws Exception {
         byte[] iv = new byte[GCM_IV_LENGTH];
         new SecureRandom().nextBytes(iv);
@@ -57,6 +64,7 @@ public class EncryptionUtil {
     }
 
     private SecretKey getKey() {
-        return new SecretKeySpec(secretKey.getBytes(), "AES");
+        byte[] decodedKey = Base64.getDecoder().decode(secretKey);
+        return new SecretKeySpec(decodedKey, "AES");
     }
 }

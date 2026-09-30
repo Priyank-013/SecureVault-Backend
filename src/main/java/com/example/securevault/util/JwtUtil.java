@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
@@ -24,6 +25,7 @@ public class JwtUtil {
         return key;
     }
 
+    //generate token for this session for this email
     public String generateToken(String email) {
         return Jwts.builder()
                 .subject(email)

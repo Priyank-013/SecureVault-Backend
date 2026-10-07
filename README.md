@@ -12,6 +12,7 @@ Backend services for SecureVault, a developer secrets manager that lets users se
 - Brute-force protection — accounts lock for 30 minutes after 7 failed login attempts
 - Global exception handling with meaningful HTTP status codes
 - REST API endpoints for full secret lifecycle management
+- Unit tests with JUnit 5 and Mockito (rate-limiting filter returns HTTP 429 after 100 requests)
 
 ## Tech Stack
 
@@ -22,6 +23,8 @@ Backend services for SecureVault, a developer secrets manager that lets users se
 - Redis (rate limiting, brute-force tracking, one-time share links)
 - JWT (jjwt)
 - Maven
+- JUnit 5 and Mockito (unit testing)
+- Spring Security Test
 
  ## Database Models
 

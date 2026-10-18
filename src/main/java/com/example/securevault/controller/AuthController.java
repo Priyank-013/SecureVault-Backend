@@ -6,6 +6,7 @@ import com.example.securevault.dto.RegisterRequest;
 import com.example.securevault.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.example.securevault.dto.OtpVerifyRequest;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,7 +21,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
+    public String login(@RequestBody LoginRequest request) {
         return authService.login(request);
+    }
+
+    @PostMapping("/verify-otp")
+    public AuthResponse verifyOtp(@RequestBody OtpVerifyRequest request) {
+        return authService.verifyOtp(request);
     }
 }

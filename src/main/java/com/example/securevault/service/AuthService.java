@@ -2,6 +2,7 @@ package com.example.securevault.service;
 
 import com.example.securevault.dto.AuthResponse;
 import com.example.securevault.dto.LoginRequest;
+import com.example.securevault.dto.OtpVerifyRequest;
 import com.example.securevault.dto.RegisterRequest;
 import com.example.securevault.model.User;
 import com.example.securevault.repository.UserRepository;
@@ -10,6 +11,7 @@ import com.example.securevault.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.example.securevault.dto.OtpVerifyRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final LoginAttemptService loginAttemptService;
+    private final OtpService otpService;
 
     public String register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -31,7 +34,7 @@ public class AuthService {
         return "User registered successfully";
     }
 
-    public AuthResponse login(LoginRequest request) {
+    public String login(LoginRequest request) {
         String email = request.getEmail();
 
         if (loginAttemptService.isLocked(email)) {
@@ -54,6 +57,16 @@ public class AuthService {
         }
 
         loginAttemptService.resetAttempts(email);
+
+        otpService.generateAndSend(email);
+        return "OTP sent to your email";
+    }
+
+    public AuthResponse verifyOtp(OtpVerifyRequest request) {
+        otpService.verify(request.getEmail(), request.getOtp());
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtUtil.generateToken(user.getEmail());
         return new AuthResponse(token, user.getEmail());
